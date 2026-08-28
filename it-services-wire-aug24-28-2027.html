@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The IT Services Wire — Aug 24–28, 2026</title>
+<meta name="description" content="Interactive weekly brief on TCS, HCLTech, Wipro and Infosys — deals, AI partnerships, and competitive positioning.">
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --ink:#17140F;
+    --ink-soft:#4B463C;
+    --rule:#D8D1C0;
+    --signal:#B5401D;
+    --tcs:#1B3A5C;
+    --hcl:#7A2048;
+    --wipro:#1E5C4A;
+    --infy:#3D3466;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased; scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Georgia",serif;
+    line-height:1.55;
+  }
+  .mono{font-family:"Courier New",ui-monospace,monospace;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--signal); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* MASTHEAD */
+  .masthead{max-width:960px; margin:0 auto; padding:40px 24px 18px; border-bottom:3px double var(--ink);}
+  .masthead-top{display:flex; justify-content:space-between; align-items:baseline; font-family:"Courier New",ui-monospace,monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:16px; flex-wrap:wrap; gap:6px;}
+  h1.title{font-size:clamp(30px,5.5vw,50px); font-weight:700; letter-spacing:-0.01em; margin:0 0 6px; line-height:1.02;}
+  .subtitle{font-size:15.5px; color:var(--ink-soft); font-style:italic; margin:0;}
+  .edition-bar{margin-top:16px; display:flex; gap:16px; flex-wrap:wrap; font-family:"Courier New",ui-monospace,monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--signal); font-weight:700;}
+
+  /* CONTROLS */
+  .controls{
+    max-width:960px; margin:0 auto; padding:18px 24px;
+    display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+    border-bottom:1px solid var(--rule);
+    position:sticky; top:0; background:var(--paper); z-index:20;
+  }
+  .search-wrap{flex:1 1 220px; position:relative;}
+  #search{
+    width:100%; padding:9px 12px 9px 30px;
+    font-family:"Courier New",ui-monospace,monospace;
+    font-size:12.5px;
+    border:1px solid var(--ink); background:#fff; color:var(--ink);
+    border-radius:2px;
+  }
+  .search-wrap::before{
+    content:"⌕"; position:absolute; left:9px; top:50%; transform:translateY(-50%);
+    font-size:14px; color:var(--ink-soft); pointer-events:none;
+  }
+  .filters{display:flex; gap:6px; flex-wrap:wrap;}
+  .filter-btn{
+    font-family:"Courier New",ui-monospace,monospace;
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; font-weight:700;
+    padding:8px 12px; border:1px solid var(--ink); background:#fff; color:var(--ink);
+    cursor:pointer; border-radius:2px; transition:background 0.15s, color 0.15s;
+  }
+  .filter-btn:hover{background:#EDE7D8;}
+  .filter-btn.active{background:var(--ink); color:var(--paper);}
+  .filter-btn[data-co="tcs"].active{background:var(--tcs); border-color:var(--tcs);}
+  .filter-btn[data-co="hcl"].active{background:var(--hcl); border-color:var(--hcl);}
+  .filter-btn[data-co="wipro"].active{background:var(--wipro); border-color:var(--wipro);}
+  .filter-btn[data-co="infy"].active{background:var(--infy); border-color:var(--infy);}
+  .no-results{
+    max-width:960px; margin:0 auto; padding:60px 24px; text-align:center;
+    color:var(--ink-soft); font-style:italic; display:none;
+  }
+
+  /* LEDE */
+  .lede{max-width:960px; margin:0 auto; padding:22px 24px 8px;}
+  .lede p{font-size:18px; margin:0;}
+  .lede .drop{float:left; font-size:60px; line-height:0.78; padding-right:10px; padding-top:4px; font-weight:700; color:var(--signal);}
+
+  /* NAV STRIP */
+  .company-nav{max-width:960px; margin:26px auto 0; padding:0 24px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule);}
+  .company-nav a{background:#fff; text-decoration:none; text-align:center; padding:10px 6px; font-family:"Courier New",ui-monospace,monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink); font-weight:700; display:block;}
+  .company-nav a:hover{background:#EDE7D8;}
+
+  /* SECTIONS */
+  section.co{max-width:960px; margin:0 auto; padding:40px 24px 8px; transition:opacity 0.2s;}
+  section.co.hidden{display:none;}
+  .co-head{display:flex; align-items:baseline; gap:14px; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:18px; cursor:pointer; user-select:none;}
+  .co-num{font-family:"Courier New",ui-monospace,monospace; font-size:13px; color:var(--ink-soft);}
+  .co-head h2{font-size:26px; margin:0; font-weight:700; flex:1;}
+  .co-tag{font-family:"Courier New",ui-monospace,monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; padding:4px 9px; border-radius:2px; color:#fff; white-space:nowrap;}
+  .tcs .co-tag{background:var(--tcs);} .hcl .co-tag{background:var(--hcl);} .wipro .co-tag{background:var(--wipro);} .infy .co-tag{background:var(--infy);}
+  .chevron{font-family:"Courier New",ui-monospace,monospace; font-size:14px; color:var(--ink-soft); transition:transform 0.2s;}
+  .co.collapsed .chevron{transform:rotate(-90deg);}
+  .co-body{overflow:hidden; max-height:4000px; transition:max-height 0.3s ease;}
+  .co.collapsed .co-body{max-height:0;}
+
+  .deal-block{border-left:3px solid var(--ink); padding:2px 0 2px 18px; margin-bottom:20px;}
+  .tcs .deal-block{border-color:var(--tcs);} .hcl .deal-block{border-color:var(--hcl);} .wipro .deal-block{border-color:var(--wipro);} .infy .deal-block{border-color:var(--infy);}
+  .eyebrow{font-family:"Courier New",ui-monospace,monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-soft); margin-bottom:6px;}
+  .deal-block p{margin:0 0 11px; font-size:16px;}
+  .deal-block p:last-child{margin-bottom:0;}
+
+  h3.sub{font-family:"Courier New",ui-monospace,monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin:22px 0 10px; border-top:1px solid var(--rule); padding-top:14px;}
+  ul.items{margin:0; padding:0; list-style:none;}
+  ul.items li{position:relative; padding-left:16px; margin-bottom:10px; font-size:15px; transition:background 0.2s;}
+  ul.items li::before{content:"—"; position:absolute; left:0; color:var(--ink-soft);}
+  ul.items li.match{background:#FFF2C4;}
+  mark{background:#FFD66B; color:inherit; padding:0 1px;}
+
+  /* COMPARISON TABLE */
+  .compare{max-width:960px; margin:52px auto 0; padding:0 24px;}
+  .compare-head{border-bottom:3px double var(--ink); padding-bottom:10px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:8px;}
+  .compare-head h2{font-size:24px; margin:0 0 4px;}
+  .compare-head p{margin:0; font-family:"Courier New",ui-monospace,monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft);}
+  .table-hint{font-family:"Courier New",ui-monospace,monospace; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em;}
+  .table-scroll{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:640px;}
+  th,td{text-align:left; padding:11px 10px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  thead th{font-family:"Courier New",ui-monospace,monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:#fff; background:var(--ink); cursor:pointer; user-select:none; position:sticky; top:0;}
+  thead th:first-child{width:18%; cursor:default;}
+  thead th:hover:not(:first-child){background:#33301f;}
+  thead th.dim-active{background:var(--signal);}
+  thead th:first-child.dim-active{background:var(--ink);}
+  tbody tr{transition:background 0.15s;}
+  tbody tr:nth-child(odd){background:#EFEADB;}
+  tbody tr.co-row-hidden{display:none;}
+  tbody td:first-child{font-family:"Courier New",ui-monospace,monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-soft); font-weight:700;}
+  tbody td.dim-col-active{background:#FFEFD6;}
+
+  /* TAKEAWAYS */
+  .takeaways{max-width:960px; margin:44px auto 0; padding:0 24px 20px;}
+  .takeaway{display:grid; grid-template-columns:110px 1fr; gap:16px; padding:16px 0; border-top:1px solid var(--rule); cursor:default;}
+  .takeaway:last-child{border-bottom:1px solid var(--rule);}
+  .takeaway.hidden{display:none;}
+  .takeaway .co-label{font-family:"Courier New",ui-monospace,monospace; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding-top:2px;}
+  .takeaway p{margin:0; font-size:14.5px;}
+  .t-tcs .co-label{color:var(--tcs);} .t-hcl .co-label{color:var(--hcl);} .t-wipro .co-label{color:var(--wipro);} .t-infy .co-label{color:var(--infy);}
+
+  footer{max-width:960px; margin:40px auto 0; padding:20px 24px 60px; border-top:3px double var(--ink); font-family:"Courier New",ui-monospace,monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.02em;}
+  footer p{margin:0 0 8px;}
+
+  .top-btn{
+    position:fixed; bottom:22px; right:22px;
+    width:40px; height:40px; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    border:none; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity 0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.25);
+    z-index:30;
+  }
+  .top-btn.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width:640px){
+    .company-nav{grid-template-columns:repeat(2,1fr);}
+    .takeaway{grid-template-columns:1fr; gap:4px;}
+    .co-head{flex-wrap:wrap;}
+    .controls{flex-direction:column; align-items:stretch;}
+  }
+  @media print{
+    .controls, .top-btn, .company-nav{display:none;}
+    .co-body{max-height:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-top">
+    <span>Vol. 1 — No. 8</span>
+    <span>Bengaluru / Delhi / Global Wire</span>
+  </div>
+  <h1 class="title">The IT Services Wire</h1>
+  <p class="subtitle">Deals, AI partnerships &amp; positioning across India's Big Four systems integrators</p>
+  <div class="edition-bar">
+    <span>Week of Aug 24–28, 2026</span>
+    <span>TCS · HCLTech · Wipro · Infosys</span>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input id="search" type="text" placeholder="Search deals, partners, keywords…" aria-label="Search the brief">
+  </div>
+  <div class="filters" role="group" aria-label="Filter by company">
+    <button class="filter-btn active" data-co="all">All</button>
+    <button class="filter-btn" data-co="tcs">TCS</button>
+    <button class="filter-btn" data-co="hcl">HCLTech</button>
+    <button class="filter-btn" data-co="wipro">Wipro</button>
+    <button class="filter-btn" data-co="infy">Infosys</button>
+  </div>
+</div>
+
+<div class="lede">
+  <p><span class="drop">T</span>his week's cycle was set by two moves at opposite ends of the deal spectrum: TCS's acquisition of Porsche's captive consultancy MHP paired with a €1.25 billion AI partnership, and Wipro's expanded Google Cloud tie-up that sent its US ADRs up 7% pre-market. HCLTech and Infosys kept pace with a mega-deal drought-breaker and a ten-year Crocs transformation contract, respectively. Filter by company above, search for a keyword, or click any headline below to collapse a section. Click a column header in the comparison table to spotlight it across all four.</p>
+</div>
+
+<nav class="company-nav">
+  <a href="#tcs">01 · TCS</a>
+  <a href="#hcl">02 · HCLTech</a>
+  <a href="#wipro">03 · Wipro</a>
+  <a href="#infy">04 · Infosys</a>
+</nav>
+
+<p class="no-results" id="noResults">No matches for that search. Try a different term, or clear the filter.</p>
+
+<!-- TCS -->
+<section class="co tcs" id="tcs" data-co="tcs">
+  <div class="co-head" data-toggle>
+    <span class="co-num">01</span>
+    <h2>Tata Consultancy Services</h2>
+    <span class="co-tag">Automotive · Industrial</span>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="co-body">
+    <div class="deal-block">
+      <div class="eyebrow">Deal of the week — Aug 24</div>
+      <p>TCS agreed to acquire Porsche's captive IT and management consultancy <strong>MHP</strong> (~4,500 employees, Ludwigsburg) for an enterprise value of <strong>€320 million</strong>, alongside a linked five-year, <strong>€1.25 billion ($1.46B)</strong> partnership covering AI applications across engineering, manufacturing, operations and customer experience.</p>
+      <p>TCS will stand up a dedicated <strong>AI Mobility Centre of Excellence</strong> for Porsche, focused on industrializing AI use cases across the product and value chain. The deal deepens TCS's German and broader European footprint and signals a shift toward "acquire-and-transform" plays rather than pure services contracts.</p>
+    </div>
+    <h3 class="sub">Tech &amp; partnership context — past month</h3>
+    <ul class="items">
+      <li>Launched the <strong>TCS Autonomous Engineering Lab Powered by NVIDIA</strong> at its Bengaluru Global Axis campus (mid-July) to move Industrial AI from pilot to production for manufacturers and mobility firms.</li>
+      <li>Earlier launched <strong>Rapid Outcome AI</strong>, an NVIDIA-built platform to speed AI from experimentation to production, with initial focus on manufacturing, banking and retail.</li>
+      <li>Diamond Sponsor at NVIDIA GTC 2026, showcasing Physical AI, Agentic AI and real-time AI systems.</li>
+      <li>Deepened its Google Cloud partnership (April) around AI-native autonomous enterprises.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HCLTECH -->
+<section class="co hcl" id="hcl" data-co="hcl">
+  <div class="co-head" data-toggle>
+    <span class="co-num">02</span>
+    <h2>HCLTech</h2>
+    <span class="co-tag">Telecom · Sovereign AI</span>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="co-body">
+    <div class="deal-block">
+      <div class="eyebrow">M&amp;A activity — past month</div>
+      <p>Completed acquisition of <strong>HPE's Telco Solutions business</strong> (Aug 3), strengthening AI-led telecom capabilities with expanded IP, engineering talent and global delivery capacity for Communications Service Providers — HCLTech's second HPE telecom deal after the 2024 CTG acquisition.</p>
+      <p>Signed a <strong>$1.14 billion mega-deal</strong> with a Europe-headquartered Fortune Global 50 company for an AI-driven operating model spanning its Global Digital Workplace and Enterprise Networks (July 3), ending a three-year mega-deal drought — shares jumped ~6% on the news.</p>
+    </div>
+    <ul class="items">
+      <li>Signed a partnership with <strong>Guardian</strong> (July 16) for AI-led modernization of technology and operations.</li>
+      <li>Completed acquisition of the <strong>Jaspersoft</strong> business unit (July 2) and acquired wealth-management consultancy <strong>Finergic</strong> (January).</li>
+    </ul>
+    <h3 class="sub">Tech &amp; AI infrastructure</h3>
+    <ul class="items">
+      <li>Announced a <strong>Rs 14,257-crore AI Data Center</strong> in Bhubaneswar with Sarvam and the Government of Odisha (July 24) — part of India's sovereign AI push — alongside a new Global Technology Center housing 5,000 people.</li>
+      <li>Launched a <strong>Physical AI Innovation Lab</strong> with NVIDIA in Santa Clara for cognitive robotics and industrial AI applications.</li>
+      <li>Named a Leader in <strong>Gartner's 2026 Magic Quadrant</strong> for Public Cloud Optimization and Transformation Services.</li>
+      <li>Earlier this year: launched a <strong>Gemini Enterprise Business Unit</strong> with Google, and <strong>AI Force 2.0</strong> for agentic AI.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WIPRO -->
+<section class="co wipro" id="wipro" data-co="wipro">
+  <div class="co-head" data-toggle>
+    <span class="co-num">03</span>
+    <h2>Wipro</h2>
+    <span class="co-tag">Agentic AI · Google Cloud</span>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="co-body">
+    <div class="deal-block">
+      <div class="eyebrow">Deal of the week — Aug 27</div>
+      <p>Wipro announced an expanded partnership with <strong>Google Cloud</strong> to accelerate Gemini Enterprise and agentic AI adoption — equipping over 10,000 AI-certified specialists (including 1,500 "Forward Deployed Engineers") and launching the <strong>LIFT</strong> (Launch-Ignite-Flywheel-Transform) framework. Wipro's US ADRs jumped as much as 7% pre-market on the news.</p>
+      <p>LIFT integrates Gemini Enterprise with Wipro's own <strong>WINGS</strong> and <strong>WEGA</strong> AI delivery platforms, moving clients from task automation to autonomous, multi-step agentic workflows.</p>
+    </div>
+    <h3 class="sub">Other recent wins &amp; partnerships</h3>
+    <ul class="items">
+      <li>Multi-year AI-enabled IT modernization deal with Dutch telecom <strong>Odido</strong>.</li>
+      <li>GenAI-led "IT 2.0" transformation partnership with <strong>HanesBrands</strong>.</li>
+      <li>Recognized as a Services-as-Software Star and Market Leader in <strong>HFS Horizons: Agentic Services 2026</strong>; announced a new AI-Native Business &amp; Platforms Unit and a strategic collaboration with Harness for AI-native software delivery.</li>
+      <li>Expanded <strong>CrowdStrike</strong> partnership for AI-powered "CyberShield MDR" managed security.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INFOSYS -->
+<section class="co infy" id="infy" data-co="infy">
+  <div class="co-head" data-toggle>
+    <span class="co-num">04</span>
+    <h2>Infosys</h2>
+    <span class="co-tag">Retail · BFSI</span>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="co-body">
+    <div class="deal-block">
+      <div class="eyebrow">Deal of the week — Aug 6</div>
+      <p>Infosys signed a <strong>10-year strategic agreement</strong> with US footwear maker Crocs to modernize core business and technology systems using AI, covering operations in more than 85 countries — aimed at unifying data, eliminating silos and enabling real-time decision-making. Financial terms undisclosed.</p>
+    </div>
+    <h3 class="sub">Other recent wins &amp; partnerships</h3>
+    <ul class="items">
+      <li>Expanded its long-standing collaboration with Finland's <strong>Metsä Group</strong> (Aug 5) for AI-led IT transformation, built around <strong>Infosys Topaz Fabric</strong>, its agentic services suite.</li>
+      <li><strong>Infosys Finacle</strong> won a multi-country transformation deal with <strong>Investec</strong>, migrating South Africa, UK, Mauritius and Channel Islands operations to Finacle on Microsoft Azure.</li>
+      <li>Partnership with <strong>Anthropic</strong> to advance AI in regulated industries (banking, healthcare).</li>
+      <li>Recognized as a leader in AI across 12 industry ratings; reported $4.8B in large deal TCV in a recent quarter, 57% net new.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<div class="compare">
+  <div class="compare-head">
+    <div>
+      <h2>The Competitive Table</h2>
+      <p>Side by side — this reporting period</p>
+    </div>
+    <span class="table-hint">Click a row label to spotlight</span>
+  </div>
+  <div class="table-scroll">
+    <table id="compareTable">
+      <thead>
+        <tr>
+          <th data-dim="dim">Dimension</th>
+          <th data-co="tcs">TCS</th>
+          <th data-co="hcl">HCLTech</th>
+          <th data-co="wipro">Wipro</th>
+          <th data-co="infy">Infosys</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Marquee deal</td>
+          <td>Porsche / MHP — ~$1.8B combined, auto/industrial</td>
+          <td>HPE Telco Solutions acquisition + $1.14B Fortune 50 mega-deal</td>
+          <td>Google Cloud / Gemini Enterprise expansion</td>
+          <td>Crocs 10-yr deal + Metsä Group + Investec (Finacle)</td>
+        </tr>
+        <tr>
+          <td>Hyperscaler / chip partner</td>
+          <td>NVIDIA (Rapid Outcome AI, Autonomous Engineering Lab) + Google Cloud</td>
+          <td>NVIDIA (Physical AI Lab), Google (Gemini Enterprise BU)</td>
+          <td>Google Cloud (deepest recent tie-up)</td>
+          <td>Microsoft Azure (Finacle/Investec), Anthropic</td>
+        </tr>
+        <tr>
+          <td>Signature AI platform</td>
+          <td>Rapid Outcome AI</td>
+          <td>AI Force 2.0</td>
+          <td>Wipro Intelligence / WINGS / WEGA / LIFT</td>
+          <td>Topaz / Topaz Fabric</td>
+        </tr>
+        <tr>
+          <td>Recent recognition</td>
+          <td>Diamond Sponsor, NVIDIA GTC 2026</td>
+          <td>Gartner MQ Leader, Public Cloud Optimization</td>
+          <td>HFS Horizons Agentic Services Market Leader</td>
+          <td>Leader across 12 AI industry ratings</td>
+        </tr>
+        <tr>
+          <td>Vertical strength this period</td>
+          <td>Automotive / industrial (Porsche)</td>
+          <td>Telecom (HPE Telco), financial services</td>
+          <td>Telecom (Odido), retail/apparel (HanesBrands), security</td>
+          <td>Retail (Crocs), manufacturing (Metsä), BFSI (Investec)</td>
+        </tr>
+        <tr>
+          <td>India infrastructure push</td>
+          <td>—</td>
+          <td>Rs 14,257 crore AI data center, Bhubaneswar (Sarvam, Govt of Odisha)</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="takeaways">
+  <div class="compare-head">
+    <div>
+      <h2>Positioning, Read Plainly</h2>
+      <p>What the moves signal</p>
+    </div>
+  </div>
+
+  <div class="takeaway t-tcs" data-co="tcs">
+    <div class="co-label">TCS</div>
+    <p>Leaning into large, capital-intensive strategic deals bundled with AI transformation rather than pure services contracts — a shift toward "acquire + transform" plays in automotive and industrial.</p>
+  </div>
+  <div class="takeaway t-hcl" data-co="hcl">
+    <div class="co-label">HCLTech</div>
+    <p>The most acquisitive of the four this year (HPE Telco, Jaspersoft, Finergic), doubling down on sovereign AI infrastructure in India alongside its long-running NVIDIA and telecom engineering strength.</p>
+  </div>
+  <div class="takeaway t-wipro" data-co="wipro">
+    <div class="co-label">Wipro</div>
+    <p>Had the most stock-moving news this specific week — its Google Cloud/Gemini expansion — signaling a bet on becoming the go-to agentic-AI integrator on Google's stack, distinct from TCS and HCLTech's NVIDIA-centric physical-AI framing.</p>
+  </div>
+  <div class="takeaway t-infy" data-co="infy">
+    <div class="co-label">Infosys</div>
+    <p>Steady cadence of large, long-duration client wins, leaning on its Topaz/Finacle product suites plus a notable Anthropic partnership for regulated industries.</p>
+  </div>
+</div>
+
+<footer>
+  <p>FINANCIAL/QUARTERLY-EARNINGS DETAIL INTENTIONALLY MINIMIZED — MENTIONED ONLY WHERE TIED TO A SPECIFIC DEAL.</p>
+  <p>ALL FOUR COMPANIES' NEXT MAJOR PUBLIC DATA POINTS (Q2 FY27 EARNINGS) FALL IN MID-OCTOBER, OUTSIDE THIS WINDOW.</p>
+  <p>Compiled from public reporting — company press releases and trade press — week of Aug 24–28, 2026.</p>
+</footer>
+
+<button class="top-btn" id="topBtn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.co'));
+  var takeaways = Array.prototype.slice.call(document.querySelectorAll('.takeaway'));
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+  var searchInput = document.getElementById('search');
+  var noResults = document.getElementById('noResults');
+  var activeFilter = 'all';
+
+  function applyFilters(){
+    var q = searchInput.value.trim().toLowerCase();
+    var anyVisible = false;
+
+    sections.forEach(function(sec){
+      var co = sec.getAttribute('data-co');
+      var coMatch = (activeFilter === 'all' || activeFilter === co);
+
+      // reset previous highlights
+      var items = sec.querySelectorAll('ul.items li, .deal-block p');
+      var sectionHasTextMatch = q === '';
+
+      items.forEach(function(li){
+        var text = li.textContent.toLowerCase();
+        var isMatch = q !== '' && text.indexOf(q) !== -1;
+        li.classList.toggle('match', isMatch);
+        if(isMatch) sectionHasTextMatch = true;
+      });
+
+      var show = coMatch && sectionHasTextMatch;
+      sec.classList.toggle('hidden', !show);
+      if(show) anyVisible = true;
+    });
+
+    takeaways.forEach(function(t){
+      var co = t.getAttribute('data-co');
+      var show = (activeFilter === 'all' || activeFilter === co);
+      t.classList.toggle('hidden', !show);
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-co');
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('input', applyFilters);
+
+  // Collapsible sections
+  document.querySelectorAll('[data-toggle]').forEach(function(head){
+    head.addEventListener('click', function(){
+      head.closest('.co').classList.toggle('collapsed');
+    });
+    head.setAttribute('tabindex', '0');
+    head.setAttribute('role', 'button');
+    head.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        head.click();
+      }
+    });
+  });
+
+  // Comparison table column spotlight
+  var table = document.getElementById('compareTable');
+  var headerCells = Array.prototype.slice.call(table.querySelectorAll('thead th[data-co]'));
+  headerCells.forEach(function(th, idx){
+    th.addEventListener('click', function(){
+      var isActive = th.classList.contains('dim-active');
+      headerCells.forEach(function(h){ h.classList.remove('dim-active'); });
+      table.querySelectorAll('td').forEach(function(td){ td.classList.remove('dim-col-active'); });
+      if(!isActive){
+        th.classList.add('dim-active');
+        var colIndex = idx + 2; // +1 for 1-index, +1 for the label column
+        table.querySelectorAll('tbody tr').forEach(function(row){
+          var cell = row.children[colIndex - 1];
+          if(cell) cell.classList.add('dim-col-active');
+        });
+      }
+    });
+  });
+
+  // Back to top
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  });
+})();
+</script>
+
+</body>
+</html>
