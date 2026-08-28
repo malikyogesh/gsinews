@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSI Daily Intelligence Brief — Aug 28, 2026</title>
+<style>
+  :root{
+    --bg:#0b1220;
+    --panel:#121a2b;
+    --panel-border:#22304a;
+    --text:#e6ebf5;
+    --muted:#93a1bb;
+    --accent:#4fd1c5;
+    --accent2:#7c9cff;
+    --tcs:#ff9f6b;
+    --hcl:#7cd6ff;
+    --tag-bg:#1a2740;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:36px 20px 60px;}
+  header{margin-bottom:28px;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.72rem;
+    color:var(--accent);
+    font-weight:600;
+  }
+  h1{
+    font-size:1.7rem;
+    margin:.35em 0 .2em;
+    color:#fff;
+  }
+  .subdate{color:var(--muted);font-size:.95rem;}
+  .lede{
+    margin-top:18px;
+    padding:14px 16px;
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-left:3px solid var(--accent2);
+    border-radius:6px;
+    font-size:.98rem;
+    color:#cfd8ec;
+  }
+  section{margin-top:34px;}
+  h2{
+    font-size:1.05rem;
+    color:#fff;
+    border-bottom:1px solid var(--panel-border);
+    padding-bottom:8px;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  h2 .n{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;height:22px;
+    background:var(--accent2);
+    color:#0b1220;
+    border-radius:5px;
+    font-size:.75rem;
+    font-weight:700;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:8px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .card h3{
+    margin:0 0 8px;
+    font-size:1.02rem;
+    color:#fff;
+    font-weight:600;
+  }
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .tag{
+    background:var(--tag-bg);
+    color:var(--muted);
+    font-size:.72rem;
+    padding:3px 9px;
+    border-radius:20px;
+    border:1px solid var(--panel-border);
+  }
+  .tag.hot{color:var(--accent);border-color:var(--accent);}
+  .card p{margin:.5em 0;color:#d3dcef;font-size:.94rem;}
+  .card p.label{
+    color:var(--muted);
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:2px;
+    margin-top:14px;
+  }
+  .card p.label:first-of-type{margin-top:0;}
+  a{color:var(--accent2);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .source-link{font-size:.82rem;color:var(--muted);}
+  .repo-candidate{
+    border-color:var(--accent);
+    background:linear-gradient(180deg, rgba(79,209,197,.06), var(--panel));
+  }
+  .repo-candidate .title-suggestion{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.85rem;
+    background:#0e1626;
+    border:1px solid var(--panel-border);
+    padding:8px 10px;
+    border-radius:5px;
+    color:var(--accent);
+    display:inline-block;
+    margin-top:4px;
+  }
+  .quiet{
+    color:var(--muted);
+    font-size:.92rem;
+    font-style:italic;
+  }
+  footer{
+    margin-top:44px;
+    padding-top:16px;
+    border-top:1px solid var(--panel-border);
+    color:var(--muted);
+    font-size:.78rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">GSI News Daily Brief</div>
+    <h1>AI Factory &amp; Sovereign AI — Morning Scan</h1>
+    <div class="subdate">Friday, August 28, 2026 · Equinix / TCS / HCLTech watch</div>
+    <div class="lede">
+      One item worth acting on: Cisco and Nvidia pushed their AI-factory partnership into rack-scale production, reinforcing that the network fabric — not just GPUs — is becoming the product. No fresh TCS or HCLTech news in the last day or two; the Korea sovereign AI buildout (slightly older) remains the clearest live template for nation-state AI factory deals.
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="n">1</span>Today's Signal Items</h2>
+
+    <div class="card">
+      <h3>Cisco expands "Secure AI Factory" with Nvidia — network becomes the compute layer</h3>
+      <div class="meta">
+        <span class="tag hot">AI Factory</span>
+        <span class="tag">Network Transformation</span>
+        <span class="tag">Aug 25–26</span>
+      </div>
+      <p class="label">What happened</p>
+      <p>Cisco and Nvidia broadened their AI Factory partnership beyond networking into full rack-scale compute, bringing in Supermicro for liquid-cooled systems starting on Blackwell and moving to Vera Rubin. The bundled solution (Nvidia Spectrum-X Ethernet + Cisco networking/management + Supermicro hardware) is orderable from September 2026. Coverage frames this as a shift from "GPU count" to production metrics like tokens/second — with networking now functioning as part of the compute system itself, not just the plumbing between components.</p>
+      <p class="label">Equinix relevance</p>
+      <p>This is a direct validation of the Fabric / Network Edge / DAI thesis: as AI factories scale out, the interconnection layer linking GPU clusters, storage, and enterprise data becomes as strategic as the silicon. It also implies more hybrid deployments (rack-scale AI factory + existing enterprise systems) needing a neutral, low-latency interconnection point rather than a single vendor's closed network.</p>
+      <p class="label">JVP / GTM angle</p>
+      <p>Strong. TCS and HCLTech are the systems integrators who will actually deploy these rack-scale architectures for enterprise clients. A joint narrative — "Equinix as the neutral interconnection layer between GSI-delivered AI factory racks and enterprise data gravity" — is timely, especially for BFSI and Manufacturing clients running private Nvidia clusters that must stay off the public internet while still reaching core banking or ERP systems.</p>
+      <p class="source-link">Sources: <a href="https://siliconangle.com/2026/08/26/the-network-becomes-the-computer-as-cisco-and-nvidia-accelerate-ai-factory-rack-scale-cisconvidiaaifactory/">SiliconANGLE, Aug 26</a> · <a href="https://siliconangle.com/2026/08/25/ai-infrastructure-execution-era-cisco-nvidia-cisconvidiaaifactory/">SiliconANGLE, Aug 25</a></p>
+    </div>
+
+    <div class="card">
+      <h3>Naver, Nvidia &amp; Brookfield scale up Korea's sovereign AI factory (55MW → 200MW, targeting 1GW)</h3>
+      <div class="meta">
+        <span class="tag">Sovereign AI</span>
+        <span class="tag">Data Residency</span>
+        <span class="tag">Aug 18 — slightly older, still live</span>
+      </div>
+      <p class="label">What happened</p>
+      <p>Naver, Nvidia, and Brookfield announced an expansion of Korea's national AI infrastructure at Naver's GAK Sejong site, from 55MW to 200MW by 2028 and a longer-term 1GW target. Nvidia is putting in $1B, Brookfield up to $9B (nonbinding). Jensen Huang's framing: "AI factories are the infrastructure nations need to compete and innovate in the intelligence era" — explicitly a sovereign-control, domestic-innovation play.</p>
+      <p class="label">Equinix relevance</p>
+      <p>This is a clean, repeatable template: hyperscaler compute (Nvidia) + sovereign operator (Naver) + capital partner (Brookfield) delivering nation-scale AI infrastructure with data-residency guarantees. It's the shape that India, EU, and Gulf sovereign AI programs are likely to follow — directly relevant to how DAI and IBX Colocation get positioned in sovereignty-driven RFPs.</p>
+      <p class="label">JVP / GTM angle</p>
+      <p>Background/context rather than an immediate trigger — no direct TCS/HCLTech tie-in in this item. Worth keeping as a reference case the next time a sovereign AI conversation comes up with a BFSI or public-sector client in India or the Middle East.</p>
+      <p class="source-link">Source: <a href="https://www.storagenewsletter.com/2026/08/18/naver-nvidia-and-brookfield-to-expand-koreas-national-ai-factory-infrastructure-buildout/">StorageNewsletter, Aug 18</a></p>
+    </div>
+
+    <p class="quiet">No TCS- or HCLTech-specific announcements surfaced in the last 24–48 hours relevant to AI/cloud partnerships or BFSI, Manufacturing, or Retail. Their public newsrooms show only pre-existing partnerships (Google Cloud, OpenAI, Guardian) with no new dated activity in this window — a quiet stretch on the GSI side specifically.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span>Repo-Worthy Candidates</h2>
+
+    <div class="card repo-candidate">
+      <h3>Candidate: Cisco/Nvidia rack-scale AI factory → Equinix interconnection play</h3>
+      <p>Substantial enough for a standalone brief. The "network becomes the compute" framing is a strong hook for explaining why distributed AI factories need Equinix's neutral interconnection layer (Fabric, Network Edge, DAI), with a TCS/HCLTech delivery angle for BFSI and Manufacturing clients.</p>
+      <p class="label">Suggested title / filename</p>
+      <div class="title-suggestion">ai-factory-rack-scale-network-gtm.html</div>
+      <p style="margin-top:10px;">Suggested angle: "When the Network Becomes the Compute — What Cisco/Nvidia's Rack-Scale AI Factory Means for GSI-Delivered Interconnection." Use it to connect rack-scale AI factory deployments (delivered by TCS/HCLTech as SIs) to Equinix as the neutral fabric linking them to enterprise data and multi-cloud.</p>
+    </div>
+  </section>
+
+  <footer>
+    Generated automatically — daily scan for AI Factory, Sovereign AI, network/interconnection transformation, and TCS/HCLTech news. Not pushed to the repo automatically; review and publish manually to <a href="https://github.com/malikyogesh/gsinews">github.com/malikyogesh/gsinews</a>.
+  </footer>
+
+</div>
+</body>
+</html>
