@@ -1,0 +1,806 @@
+<title>GSI Pulse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    color-scheme: light;
+    --bg: #eef0f2;
+    --page-plane: #e6e8eb;
+    --surface: #ffffff;
+    --surface-2: #f3f4f6;
+    --surface-raised: #ffffff;
+    --text-primary: #14161c;
+    --text-secondary: #4d5261;
+    --text-muted: #7b8091;
+    --border: rgba(20,22,28,0.11);
+    --border-strong: rgba(20,22,28,0.20);
+
+    --accent: #b45f06;
+    --accent-ink: #ffffff;
+    --accent-wash: rgba(180,95,6,0.10);
+    --teal: #0f7d72;
+    --teal-wash: rgba(15,125,114,0.10);
+
+    --c-hcl: #2a78d6;
+    --c-hcl-wash: rgba(42,120,214,0.10);
+    --c-tcs: #cf5a25;
+    --c-tcs-wash: rgba(207,90,37,0.10);
+    --c-wipro: #1baf7a;
+    --c-wipro-wash: rgba(27,175,122,0.10);
+    --c-infy: #4a3aa7;
+    --c-infy-wash: rgba(74,58,167,0.10);
+
+    --shadow: 0 1px 2px rgba(20,22,28,0.04), 0 8px 24px -12px rgba(20,22,28,0.16);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg: #0c0d10;
+      --page-plane: #0c0d10;
+      --surface: #16181e;
+      --surface-2: #1c1f27;
+      --surface-raised: #1a1d24;
+      --text-primary: #f4f5f7;
+      --text-secondary: #b7bac4;
+      --text-muted: #82869a;
+      --border: rgba(255,255,255,0.09);
+      --border-strong: rgba(255,255,255,0.16);
+
+      --accent: #f2a93b;
+      --accent-ink: #16181e;
+      --accent-wash: rgba(242,169,59,0.14);
+      --teal: #3fd6c6;
+      --teal-wash: rgba(63,214,198,0.13);
+
+      --c-hcl: #3987e5;
+      --c-hcl-wash: rgba(57,135,229,0.16);
+      --c-tcs: #e07a45;
+      --c-tcs-wash: rgba(224,122,69,0.16);
+      --c-wipro: #26c88d;
+      --c-wipro-wash: rgba(38,200,141,0.16);
+      --c-infy: #9085e9;
+      --c-infy-wash: rgba(144,133,233,0.16);
+
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg: #0c0d10;
+    --page-plane: #0c0d10;
+    --surface: #16181e;
+    --surface-2: #1c1f27;
+    --surface-raised: #1a1d24;
+    --text-primary: #f4f5f7;
+    --text-secondary: #b7bac4;
+    --text-muted: #82869a;
+    --border: rgba(255,255,255,0.09);
+    --border-strong: rgba(255,255,255,0.16);
+
+    --accent: #f2a93b;
+    --accent-ink: #16181e;
+    --accent-wash: rgba(242,169,59,0.14);
+    --teal: #3fd6c6;
+    --teal-wash: rgba(63,214,198,0.13);
+
+    --c-hcl: #3987e5;
+    --c-hcl-wash: rgba(57,135,229,0.16);
+    --c-tcs: #e07a45;
+    --c-tcs-wash: rgba(224,122,69,0.16);
+    --c-wipro: #26c88d;
+    --c-wipro-wash: rgba(38,200,141,0.16);
+    --c-infy: #9085e9;
+    --c-infy-wash: rgba(144,133,233,0.16);
+
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .display{ font-family: "Archivo", system-ui, sans-serif; text-wrap: balance; }
+  .mono{ font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace; font-variant-numeric: tabular-nums; }
+
+  a{ color: inherit; }
+  a:focus-visible, button:focus-visible, .navlink:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .headbar{ display:flex; align-items:center; justify-content: space-between; gap: 20px; padding: 14px 0; }
+  .brandmark{ display:flex; align-items:center; gap: 10px; }
+  .node-icon{ width: 26px; height: 26px; flex: none; }
+  .brand-text{ display:flex; flex-direction: column; line-height: 1.1; }
+  .brand-text .name{ font-family:"Archivo"; font-weight:800; font-size: 17px; letter-spacing: 0.2px; }
+  .brand-text .sub{ font-size: 11px; color: var(--text-muted); letter-spacing: 0.4px; text-transform: uppercase; }
+  nav.pills{ display:flex; gap: 4px; flex-wrap: wrap; }
+  .navlink{
+    font-size: 13px; font-weight: 600; color: var(--text-secondary);
+    text-decoration: none; padding: 7px 12px; border-radius: 999px;
+    transition: background .15s ease, color .15s ease;
+    white-space: nowrap;
+  }
+  .navlink:hover{ background: var(--surface-2); color: var(--text-primary); }
+  .navlink.active{ background: var(--accent-wash); color: var(--accent); }
+  .asof{ font-size: 11px; color: var(--text-muted); white-space:nowrap; }
+
+  @media (max-width: 920px){
+    nav.pills{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{ padding: 56px 0 20px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase;
+    color: var(--teal); background: var(--teal-wash); border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent);
+    padding: 5px 11px; border-radius: 999px; margin-bottom: 18px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--teal); }
+  h1.title{ font-size: clamp(30px, 4.2vw, 46px); font-weight: 800; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .lede{ font-size: 16.5px; color: var(--text-secondary); max-width: 66ch; margin: 0 0 34px; }
+
+  .stat-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 8px; }
+  @media (max-width: 940px){ .stat-grid{ grid-template-columns: repeat(2,1fr);} }
+  @media (max-width: 560px){ .stat-grid{ grid-template-columns: 1fr;} }
+
+  .stat-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 18px 16px; box-shadow: var(--shadow);
+    border-top: 3px solid var(--c);
+    display:flex; flex-direction: column; gap: 8px;
+    text-decoration: none; color: inherit;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .stat-card:hover{ transform: translateY(-2px); border-color: var(--border-strong); }
+  .stat-card .co{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--c); }
+  .stat-card .fig{ font-family:"Archivo"; font-weight: 800; font-size: 24px; }
+  .stat-card .cap{ font-size: 13px; color: var(--text-secondary); }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 46px 0; border-top: 1px solid var(--border); }
+  section:first-of-type{ border-top: none; }
+  .sec-head{ display:flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .sec-head h2{ font-family:"Archivo"; font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+  .sec-num{ font-family:"IBM Plex Mono"; font-size: 12px; color: var(--text-muted); }
+  .sec-desc{ color: var(--text-secondary); max-width: 70ch; margin: 6px 0 0; font-size: 14.5px; }
+
+  /* ---------- filter chips ---------- */
+  .chiprow{ display:flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .chip{
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    background: var(--surface); color: var(--text-secondary);
+    border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px;
+    display:inline-flex; align-items:center; gap:7px;
+    transition: all .15s ease;
+  }
+  .chip .sw{ width:8px; height:8px; border-radius:50%; background: var(--dot, var(--text-muted)); }
+  .chip:hover{ border-color: var(--border-strong); }
+  .chip[aria-pressed="true"]{ background: var(--wash, var(--accent-wash)); color: var(--col, var(--accent)); border-color: color-mix(in srgb, var(--col, var(--accent)) 45%, transparent); }
+
+  /* ---------- deal table ---------- */
+  .tbl-wrap{ overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+  table{ border-collapse: collapse; width: 100%; min-width: 760px; }
+  thead th{
+    text-align: left; font-size: 11px; letter-spacing: .5px; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 600; padding: 12px 16px; border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+    position: sticky; top: 0;
+  }
+  tbody td{ padding: 13px 16px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: top; }
+  tbody tr:last-child td{ border-bottom: none; }
+  tbody tr{ transition: background .15s ease; }
+  tbody tr:hover{ background: var(--surface-2); }
+  .co-badge{
+    display:inline-flex; align-items:center; gap:6px; font-weight: 700; font-size: 12.5px;
+    color: var(--col); white-space: nowrap;
+  }
+  .co-badge .sw{ width:7px; height:7px; border-radius:50%; background: var(--col); }
+  .val{ font-family:"IBM Plex Mono"; font-weight: 600; }
+  .src-link{ color: var(--teal); text-decoration: none; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+  .src-link:hover{ text-decoration: underline; }
+  .tag{ display:inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; padding: 2px 7px; border-radius: 5px; background: var(--surface-2); color: var(--text-muted); }
+  .tag.newlogo{ background: var(--teal-wash); color: var(--teal); }
+
+  /* ---------- tech cards ---------- */
+  .card-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (max-width: 760px){ .card-grid{ grid-template-columns: 1fr; } }
+  .tcard{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+    border-left: 3px solid var(--col); box-shadow: var(--shadow);
+  }
+  .tcard .hd{ display:flex; align-items:center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .tcard .hd .co-badge{ font-size: 12px; }
+  .tcard .hd .date{ font-family:"IBM Plex Mono"; font-size: 11px; color: var(--text-muted); }
+  .tcard h3{ margin: 0 0 6px; font-size: 15.5px; font-weight: 700; }
+  .tcard p{ margin: 0; color: var(--text-secondary); font-size: 13.5px; }
+  .tcard .foot{ margin-top: 12px; display:flex; justify-content: space-between; align-items:center; gap: 10px; }
+
+  /* ---------- comparison matrix ---------- */
+  .matrix-wrap{ overflow-x:auto; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); margin-bottom: 30px;}
+  table.matrix{ min-width: 820px; }
+  table.matrix th.rowlabel{ position: sticky; left:0; background: var(--surface-2); z-index:2; }
+  table.matrix td.rowlabel{ position: sticky; left:0; background: var(--surface); z-index:1; font-weight:600; color: var(--text-secondary); font-size: 12.5px; }
+  table.matrix thead th{ text-align:center; }
+  table.matrix thead th.co-col{ font-size:12.5px; }
+  table.matrix tbody td{ text-align:center; font-size: 13px; }
+  table.matrix tbody td:not(.rowlabel){ text-align:left; }
+
+  /* bar chart */
+  .chart-block{ background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 22px 18px; box-shadow: var(--shadow); }
+  .chart-title{ font-size: 13px; font-weight: 700; margin: 0 0 3px; }
+  .chart-sub{ font-size: 12px; color: var(--text-muted); margin: 0 0 20px; }
+  .bar-row{ display:grid; grid-template-columns: 130px 1fr 110px; align-items:center; gap: 12px; margin-bottom: 14px; }
+  .bar-row .lbl{ display:flex; align-items:center; gap:7px; font-size: 13px; font-weight: 600; }
+  .bar-row .lbl .sw{ width:8px; height:8px; border-radius:50%; background: var(--col); flex:none; }
+  .bar-track{ position: relative; height: 14px; background: var(--surface-2); border-radius: 7px; overflow: hidden; }
+  .bar-fill{ position:absolute; inset:0 auto 0 0; height:100%; border-radius: 7px; background: var(--col); width: 0%; transition: width 1s cubic-bezier(.2,.8,.2,1); }
+  .bar-val{ font-family:"IBM Plex Mono"; font-size: 13px; font-weight:600; text-align:right; }
+  .chart-note{ font-size: 11.5px; color: var(--text-muted); margin-top: 6px; }
+
+  /* ---------- equinix playbook ---------- */
+  .play-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 26px; }
+  @media (max-width: 800px){ .play-grid{ grid-template-columns: 1fr; } }
+  .play-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    box-shadow: var(--shadow); display:flex; flex-direction:column;
+  }
+  .play-card .top{ padding: 16px 18px; background: var(--wash); border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content: space-between; gap: 10px; }
+  .play-card .top .co-badge{ font-size: 13px; color: var(--col); }
+  .play-card .top .status{ font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing:.3px; padding: 3px 9px; border-radius: 999px; }
+  .status.existing{ background: var(--teal-wash); color: var(--teal); }
+  .status.whitespace{ background: var(--accent-wash); color: var(--accent); }
+  .play-card .body{ padding: 18px; display:flex; flex-direction:column; gap: 12px; flex:1; }
+  .jvp-name{ font-family:"Archivo"; font-weight: 800; font-size: 17px; margin: 0; }
+  .trigger{ font-size: 12.5px; color: var(--text-secondary); background: var(--surface-2); border-radius: 8px; padding: 8px 10px; border-left: 2px solid var(--col); }
+  .trigger b{ color: var(--text-primary); }
+  .kv{ display:flex; flex-direction:column; gap: 6px; }
+  .kv .row{ display:flex; gap: 8px; font-size: 12.8px; }
+  .kv .row .k{ flex: none; width: 84px; color: var(--text-muted); font-weight: 600; }
+  .kv .row .v{ color: var(--text-secondary); }
+  .why-now{ font-size: 13px; color: var(--text-primary); border-top: 1px dashed var(--border); padding-top: 10px; margin-top: auto; }
+  .why-now b{ color: var(--col); }
+
+  .synth{
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px;
+  }
+  .synth h3{ margin: 0 0 10px; font-size: 15px; }
+  .synth ol{ margin: 0; padding-left: 20px; color: var(--text-secondary); font-size: 13.5px; display:flex; flex-direction:column; gap: 8px; }
+  .synth li b{ color: var(--text-primary); }
+
+  /* ---------- sources ---------- */
+  .src-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 24px 34px; }
+  @media (max-width: 760px){ .src-grid{ grid-template-columns: 1fr; } }
+  .src-group h4{ display:flex; align-items:center; gap:7px; font-size: 12.5px; text-transform: uppercase; letter-spacing:.4px; margin: 0 0 10px; color: var(--col); }
+  .src-group h4 .sw{ width:7px; height:7px; border-radius:50%; background: var(--col); }
+  .src-group ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .src-group li a{ font-size: 13px; text-decoration:none; color: var(--text-secondary); }
+  .src-group li a:hover{ color: var(--teal); text-decoration: underline; }
+
+  footer{ padding: 30px 0 60px; text-align:center; color: var(--text-muted); font-size: 12px; }
+
+  .hidden{ display:none !important; }
+</style>
+
+<header>
+  <div class="wrap headbar">
+    <div class="brandmark">
+      <svg class="node-icon" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="13" cy="4.5" r="2.4" fill="var(--accent)"/>
+        <circle cx="4" cy="19" r="2.4" fill="var(--teal)"/>
+        <circle cx="22" cy="19" r="2.4" fill="var(--c-wipro)"/>
+        <path d="M13 6.8 L4 17 M13 6.8 L22 17 M6.2 19 L19.8 19" stroke="var(--border-strong)" stroke-width="1.3"/>
+      </svg>
+      <div class="brand-text">
+        <span class="name">GSI Pulse</span>
+        <span class="sub">Equinix Partner Intelligence</span>
+      </div>
+    </div>
+    <nav class="pills" id="topnav">
+      <a class="navlink" href="#deals">Deal Flow</a>
+      <a class="navlink" href="#tech">Tech &amp; Alliances</a>
+      <a class="navlink" href="#compare">Comparison</a>
+      <a class="navlink" href="#equinix">Equinix Playbook</a>
+      <a class="navlink" href="#sources">Sources</a>
+    </nav>
+    <span class="asof mono">As of Aug&nbsp;28, 2026</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="top">
+    <span class="eyebrow"><span class="dot"></span>4-week pulse · HCLTech · TCS · Wipro · Infosys</span>
+    <h1 class="title display">The Indian GSIs' AI land-grab, and where Equinix plugs in</h1>
+    <p class="lede">A one-month scan of customer wins, hyperscaler moves and infrastructure bets across the four largest Indian IT services firms &mdash; closing with a JVP/GTM map of where each opens a door for Equinix.</p>
+
+    <div class="stat-grid">
+      <a class="stat-card" style="--c:var(--c-hcl)" href="#deals">
+        <span class="co">HCLTech</span>
+        <span class="fig mono">$1.14B</span>
+        <span class="cap">First mega-deal in 3 years, plus a self-funded push into owning AI data centers.</span>
+      </a>
+      <a class="stat-card" style="--c:var(--c-tcs)" href="#deals">
+        <span class="co">TCS</span>
+        <span class="fig mono">$1.46B</span>
+        <span class="cap">Porsche AI deal and MHP carve-out land the same week as a top-exec reshuffle.</span>
+      </a>
+      <a class="stat-card" style="--c:var(--c-wipro)" href="#deals">
+        <span class="co">Wipro</span>
+        <span class="fig mono">Today</span>
+        <span class="cap">Expanded Google Cloud tie-up puts Gemini Enterprise at the center of its agent stack.</span>
+      </a>
+      <a class="stat-card" style="--c:var(--c-infy)" href="#deals">
+        <span class="co">Infosys</span>
+        <span class="fig mono">2 new</span>
+        <span class="cap">10-year Crocs and Metsä Group wins built entirely around Topaz Fabric agents.</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="deals">
+    <div class="sec-head">
+      <h2>Customer wins &amp; deal flow <span class="sec-num mono">01</span></h2>
+    </div>
+    <p class="sec-desc">New logos and expansions signed or disclosed in the past month, ranked by disclosed value where available. Filter by company.</p>
+
+    <div class="chiprow" id="dealFilters" role="group" aria-label="Filter deals by company">
+      <button class="chip" data-filter="all" aria-pressed="true"><span class="sw"></span>All</button>
+      <button class="chip" data-filter="hcl" style="--col:var(--c-hcl); --wash:var(--c-hcl-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-hcl)"></span>HCLTech</button>
+      <button class="chip" data-filter="tcs" style="--col:var(--c-tcs); --wash:var(--c-tcs-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-tcs)"></span>TCS</button>
+      <button class="chip" data-filter="wipro" style="--col:var(--c-wipro); --wash:var(--c-wipro-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-wipro)"></span>Wipro</button>
+      <button class="chip" data-filter="infy" style="--col:var(--c-infy); --wash:var(--c-infy-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-infy)"></span>Infosys</button>
+    </div>
+
+    <div class="tbl-wrap">
+      <table id="dealTable">
+        <thead>
+          <tr>
+            <th>Company</th><th>Client</th><th>Sector</th><th>Value / TCV</th><th>Term</th><th>Date</th><th>Type</th><th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-co="tcs">
+            <td><span class="co-badge" style="--col:var(--c-tcs)"><span class="sw"></span>TCS</span></td>
+            <td>Porsche AG</td><td>Automotive</td>
+            <td class="val">&euro;1.25B (~$1.46B)</td><td>5 yrs</td><td class="mono">Aug 24</td>
+            <td><span class="tag newlogo">Expansion</span></td>
+            <td><a class="src-link" href="https://www.business-standard.com/companies/news/tcs-to-acquire-porsche-s-it-division-mhp-for-373-25-million-126082400886_1.html" target="_blank" rel="noopener">Report &#8599;</a></td>
+          </tr>
+          <tr data-co="hcl">
+            <td><span class="co-badge" style="--col:var(--c-hcl)"><span class="sw"></span>HCLTech</span></td>
+            <td>European Fortune Global 50 (auto sector)</td><td>Manufacturing</td>
+            <td class="val">$1.14B</td><td>5.5 yrs (+5 opt.)</td><td class="mono">Jul 3</td>
+            <td><span class="tag newlogo">New logo</span></td>
+            <td><a class="src-link" href="https://nearshoreamericas.com/hcltech-wins-1-14-billion-ai-led-it-services-deal/" target="_blank" rel="noopener">Report &#8599;</a></td>
+          </tr>
+          <tr data-co="tcs">
+            <td><span class="co-badge" style="--col:var(--c-tcs)"><span class="sw"></span>TCS</span></td>
+            <td>ABB</td><td>Industrial / Automation</td>
+            <td class="val">Undisclosed</td><td>Multi-yr ext.</td><td class="mono">Jul 13</td>
+            <td><span class="tag">Expansion</span></td>
+            <td><a class="src-link" href="https://finance.biggo.com/news/8774c4d7-763b-4cc7-9d9e-685db717c69a" target="_blank" rel="noopener">Report &#8599;</a></td>
+          </tr>
+          <tr data-co="infy">
+            <td><span class="co-badge" style="--col:var(--c-infy)"><span class="sw"></span>Infosys</span></td>
+            <td>Crocs, Inc.</td><td>Retail</td>
+            <td class="val">Undisclosed</td><td>10 yrs</td><td class="mono">Aug 6</td>
+            <td><span class="tag newlogo">New logo</span></td>
+            <td><a class="src-link" href="https://www.infosys.com/newsroom/press-releases/2026/optimizing-global-operational-capabilities.html" target="_blank" rel="noopener">Press release &#8599;</a></td>
+          </tr>
+          <tr data-co="infy">
+            <td><span class="co-badge" style="--col:var(--c-infy)"><span class="sw"></span>Infosys</span></td>
+            <td>Mets&auml; Group</td><td>Forest &amp; Paper / Manufacturing</td>
+            <td class="val">Undisclosed</td><td>Multi-yr</td><td class="mono">Aug 5</td>
+            <td><span class="tag">Expansion</span></td>
+            <td><a class="src-link" href="https://www.stocktitan.net/news/INFY/infosys-and-metsa-group-expand-strategic-collaboration-to-drive-ai-eu39ndkoophg.html" target="_blank" rel="noopener">Report &#8599;</a></td>
+          </tr>
+          <tr data-co="wipro">
+            <td><span class="co-badge" style="--col:var(--c-wipro)"><span class="sw"></span>Wipro</span></td>
+            <td>Olam Group (+ Mindsprint acquisition)</td><td>Food &amp; Agri-business</td>
+            <td class="val">&gt;$1.0B TCV</td><td>8 yrs</td><td class="mono">Apr 6</td>
+            <td><span class="tag newlogo">New logo</span></td>
+            <td><a class="src-link" href="https://www.wipro.com/newsroom/press-releases/2026/wipro-wins-one-of-its-largest-strategic-transformation-engagements-from-food-and-agri-business-leader-olam-group/" target="_blank" rel="noopener">Press release &#8599;</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="chart-note" style="margin-top:10px">Olam/Mindsprint (Apr 6) and Wacker Chemie (HCLTech, 5-yr IT transformation) are carried as the most recent large-scale wins outside the strict 30-day window; both remain active reference deals this quarter.</p>
+  </section>
+
+  <section id="tech">
+    <div class="sec-head">
+      <h2>Technology moves &amp; alliances <span class="sec-num mono">02</span></h2>
+    </div>
+    <p class="sec-desc">AI platforms, hyperscaler partnerships, infrastructure bets and risk events from the same window.</p>
+
+    <div class="chiprow" id="techFilters" role="group" aria-label="Filter technology updates by company">
+      <button class="chip" data-filter="all" aria-pressed="true"><span class="sw"></span>All</button>
+      <button class="chip" data-filter="hcl" style="--col:var(--c-hcl); --wash:var(--c-hcl-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-hcl)"></span>HCLTech</button>
+      <button class="chip" data-filter="tcs" style="--col:var(--c-tcs); --wash:var(--c-tcs-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-tcs)"></span>TCS</button>
+      <button class="chip" data-filter="wipro" style="--col:var(--c-wipro); --wash:var(--c-wipro-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-wipro)"></span>Wipro</button>
+      <button class="chip" data-filter="infy" style="--col:var(--c-infy); --wash:var(--c-infy-wash)" aria-pressed="false"><span class="sw" style="background:var(--c-infy)"></span>Infosys</button>
+    </div>
+
+    <div class="card-grid" id="techGrid">
+
+      <div class="tcard" data-co="hcl" style="--col:var(--c-hcl)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-hcl)"><span class="sw"></span>HCLTech</span><span class="date mono">Jul 13</span></div>
+        <h3>Full-stack AI offering + owned AI data centers</h3>
+        <p>Up to &#8377;3,500 crore (~$420M) committed to build AI data center capacity in India, scaling toward 50MW, via a new subsidiary. CEO C&nbsp;Vijayakumar cites &ldquo;AI-led demand, supply constraints and digital sovereignty.&rdquo;</p>
+        <div class="foot"><span class="tag">Infrastructure</span><a class="src-link" href="https://www.hcltech.com/press-releases/hcltech-launches-full-stack-ai-offering-powered-new-ai-data-center-investment" target="_blank" rel="noopener">HCLTech &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="tcs" style="--col:var(--c-tcs)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-tcs)"><span class="sw"></span>TCS</span><span class="date mono">Jun 11</span></div>
+        <h3>Global Premier Partnership with Anthropic</h3>
+        <p>50,000 associates get Claude access; joint go-to-market across financial services, public services, life sciences, healthcare, aviation and telecom, delivered through TCS iON, Diligenta and BFSI platforms.</p>
+        <div class="foot"><span class="tag">AI Partnership</span><a class="src-link" href="https://www.tcs.com/who-we-are/newsroom/press-release/tcs-anthropic-launch-global-premier-partnership-drive-enterprise-ai-scaling" target="_blank" rel="noopener">TCS &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="wipro" style="--col:var(--c-wipro)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-wipro)"><span class="sw"></span>Wipro</span><span class="date mono">Aug 28</span></div>
+        <h3>Google Cloud partnership expanded around Gemini Enterprise</h3>
+        <p>Gemini Enterprise becomes Wipro's orchestration layer for autonomous agents; 10,000+ AI-certified specialists, 1,500+ Forward Deployed Engineers, and the LIFT framework tying into WINGS/WEGA. Shares rose 2.4% same day.</p>
+        <div class="foot"><span class="tag">AI Partnership</span><a class="src-link" href="https://www.business-standard.com/markets/capital-market-news/wipro-rises-after-expanding-ai-partnership-with-google-cloud-126082800541_1.html" target="_blank" rel="noopener">Report &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="infy" style="--col:var(--c-infy)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-infy)"><span class="sw"></span>Infosys</span><span class="date mono">Apr 21</span></div>
+        <h3>Infosys&ndash;HFS report: agentic AI still early</h3>
+        <p>Only 14% of enterprises have scaled agentic AI enterprise-wide; IT operations (50%) and customer support (42%) lead measurable outcomes. 44% cite data/infrastructure gaps as the constraint.</p>
+        <div class="foot"><span class="tag">Research</span><a class="src-link" href="https://www.infosys.com/newsroom/features/2026/enterprises-scaled-agentic-ai.html" target="_blank" rel="noopener">Infosys &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="hcl" style="--col:var(--c-hcl)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-hcl)"><span class="sw"></span>HCLTech</span><span class="date mono">Aug 4</span></div>
+        <h3>Named to TIME's World's Most Sustainable Companies, 2nd year</h3>
+        <p>Highest-ranked India-headquartered company in its category; hit its SBTi 2030 emissions target four years early and holds zero-waste-to-landfill platinum status across owned facilities.</p>
+        <div class="foot"><span class="tag">Sustainability</span><a class="src-link" href="https://www.businesstoday.in/latest/corporate/story/hcltech-features-in-times-worlds-most-sustainable-companies-2026-list-for-second-straight-year-547205-2026-08-04" target="_blank" rel="noopener">Report &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="tcs" style="--col:var(--c-tcs)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-tcs)"><span class="sw"></span>TCS &amp; HCLTech</span><span class="date mono">Early Aug</span></div>
+        <h3>Data-exposure claims investigated, dismissed as stale</h3>
+        <p>A threat actor claimed employee-data access at both firms; each investigated and found the data &ldquo;limited in scope&hellip;and over four years old,&rdquo; with no client or infrastructure impact. Coincided with a CERT-In advisory on M365 phishing/password-spraying.</p>
+        <div class="foot"><span class="tag">Cybersecurity</span><a class="src-link" href="https://www.whalesbook.com/news/English/technology/TCS-HCLTech-Address-Cyber-Alerts-Deny-System-Breaches/6a8be9cc84d2dd5c12e28f4c" target="_blank" rel="noopener">Report &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="infy" style="--col:var(--c-infy)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-infy)"><span class="sw"></span>Infosys</span><span class="date mono">Aug 5</span></div>
+        <h3>Topaz Fabric anchors the Mets&auml; deal</h3>
+        <p>Infosys' composable, open agentic-services suite embeds automation across IT/OT operations for Mets&auml; Group's global mills and offices, spanning application management, cloud ops and workplace services.</p>
+        <div class="foot"><span class="tag">AI Platform</span><a class="src-link" href="https://www.stocktitan.net/news/INFY/infosys-and-metsa-group-expand-strategic-collaboration-to-drive-ai-eu39ndkoophg.html" target="_blank" rel="noopener">Report &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="tcs" style="--col:var(--c-tcs)">
+        <div class="hd"><span class="co-badge" style="--col:var(--c-tcs)"><span class="sw"></span>TCS</span><span class="date mono">Aug 24&ndash;25</span></div>
+        <h3>Porsche deal lands alongside a top-executive reshuffle</h3>
+        <p>The Porsche/MHP win &mdash; TCS's third acquisition in under a year &mdash; coincided with its biggest leadership reshuffle in three years, following the company's first-ever annual revenue decline since its 2004 listing.</p>
+        <div class="foot"><span class="tag">Corporate</span><a class="src-link" href="https://finance.biggo.com/news/8774c4d7-763b-4cc7-9d9e-685db717c69a" target="_blank" rel="noopener">Report &#8599;</a></div>
+      </div>
+
+      <div class="tcard" data-co="hcl wipro tcs infy" style="--col:var(--accent)">
+        <div class="hd"><span class="co-badge" style="--col:var(--accent)"><span class="sw"></span>All four</span><span class="date mono">Jun 3</span></div>
+        <h3>300,000+ seats of Microsoft 365 Copilot, combined</h3>
+        <p>Infosys, TCS and Wipro each passed 100,000 deployed seats (91%, 86% and 95% active usage respectively) &mdash; one of Microsoft's largest enterprise AI rollouts globally, up from 50,000-seat pilots in December 2025.</p>
+        <div class="foot"><span class="tag">AI Adoption</span><a class="src-link" href="https://news.microsoft.com/source/asia/2026/06/03/infosys-tcs-and-wipro-scale-microsoft-365-copilot-to-over-300000-employees/" target="_blank" rel="noopener">Microsoft &#8599;</a></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="sec-head">
+      <h2>Competitive comparison <span class="sec-num mono">03</span></h2>
+    </div>
+    <p class="sec-desc">How the four stack up on the dimensions that matter most for infrastructure and interconnection strategy.</p>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th class="rowlabel"></th>
+            <th class="co-col" style="color:var(--c-hcl)">HCLTech</th>
+            <th class="co-col" style="color:var(--c-tcs)">TCS</th>
+            <th class="co-col" style="color:var(--c-wipro)">Wipro</th>
+            <th class="co-col" style="color:var(--c-infy)">Infosys</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rowlabel">Flagship AI platform</td>
+            <td>AI Force / full-stack AI</td>
+            <td>WisdomNext &amp; agentic AI (drug dev, retail)</td>
+            <td>Wipro Intelligence&trade; + LIFT framework</td>
+            <td>Topaz &amp; Topaz Fabric</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Deepest hyperscaler bet (period)</td>
+            <td>AWS (financial services), Microsoft, Google Cloud</td>
+            <td>Anthropic (Global Premier), Google Cloud</td>
+            <td>Google Cloud (Gemini Enterprise orchestration)</td>
+            <td>AWS (GenAI, Amazon Q), Microsoft</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Marquee deal this period</td>
+            <td>$1.14B &mdash; European Fortune 50 (auto)</td>
+            <td>$1.46B &mdash; Porsche + MHP carve-out</td>
+            <td>$1B+ TCV &mdash; Olam Group (Apr)</td>
+            <td>10-yr Crocs; Mets&auml; Group (both undisclosed value)</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Infrastructure posture</td>
+            <td><b>Owns build:</b> up to $420M into AI data centers, 50MW</td>
+            <td>Asset-light, consulting-led; exploring hyperscaler DC talks</td>
+            <td>Asset-light; deepest existing colo/interconnect partner</td>
+            <td>Asset-light; interconnection via named alliance page</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Sustainability signal</td>
+            <td>TIME Most Sustainable, 2nd year; SBTi 2030 target hit early</td>
+            <td>Net-zero commitments; less period visibility</td>
+            <td>Wipro Intelligence sustainability tie-ins</td>
+            <td>Long-standing carbon-neutral operations</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Cyber posture (period)</td>
+            <td>Data-exposure claim, deemed stale/immaterial</td>
+            <td>Data-exposure claim, deemed stale/immaterial</td>
+            <td>No period incident surfaced</td>
+            <td>No period incident surfaced</td>
+          </tr>
+          <tr>
+            <td class="rowlabel">Existing Equinix relationship</td>
+            <td>No public alliance page surfaced</td>
+            <td>No public alliance page surfaced</td>
+            <td><b>Gold Partner, 7+ yrs</b> &mdash; Boundaryless Cloud Exchange</td>
+            <td><b>Named alliance</b> &mdash; global interconnection platform</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-block">
+      <p class="chart-title">Headline deal value this period</p>
+      <p class="chart-sub">Disclosed contract/transaction value of each firm's largest reported win, past 30&ndash;45 days ($B)</p>
+      <div id="dealChart">
+        <div class="bar-row">
+          <span class="lbl" style="--col:var(--c-tcs)"><span class="sw"></span>TCS &middot; Porsche</span>
+          <div class="bar-track"><div class="bar-fill" style="--col:var(--c-tcs)" data-target="100"></div></div>
+          <span class="bar-val">$1.46B</span>
+        </div>
+        <div class="bar-row">
+          <span class="lbl" style="--col:var(--c-hcl)"><span class="sw"></span>HCLTech &middot; F50 auto</span>
+          <div class="bar-track"><div class="bar-fill" style="--col:var(--c-hcl)" data-target="78"></div></div>
+          <span class="bar-val">$1.14B</span>
+        </div>
+        <div class="bar-row">
+          <span class="lbl" style="--col:var(--c-wipro)"><span class="sw"></span>Wipro &middot; Olam</span>
+          <div class="bar-track"><div class="bar-fill" style="--col:var(--c-wipro)" data-target="68"></div></div>
+          <span class="bar-val">&gt;$1.0B</span>
+        </div>
+        <div class="bar-row">
+          <span class="lbl" style="--col:var(--c-infy)"><span class="sw"></span>Infosys &middot; Crocs</span>
+          <div class="bar-track"><div class="bar-fill" style="--col:var(--c-infy)" data-target="6"></div></div>
+          <span class="bar-val">Undisclosed</span>
+        </div>
+      </div>
+      <p class="chart-note">Infosys bar reflects deal prominence, not disclosed value &mdash; contract value was not released for Crocs or Mets&auml; Group.</p>
+    </div>
+  </section>
+
+  <section id="equinix">
+    <div class="sec-head">
+      <h2>Equinix relevance &amp; JVP/GTM map <span class="sec-num mono">04</span></h2>
+    </div>
+    <p class="sec-desc">Each GSI's news this period opens a specific, time-bound door. Below: a proposed joint value proposition and go-to-market motion per partner, tied to the trigger event and the Equinix assets it calls for.</p>
+
+    <div class="play-grid">
+
+      <div class="play-card" style="--col:var(--c-hcl); --wash:var(--c-hcl-wash)">
+        <div class="top"><span class="co-badge"><span class="sw" style="background:var(--c-hcl)"></span>HCLTech</span><span class="status whitespace">White space</span></div>
+        <div class="body">
+          <p class="jvp-name">Neutral Fabric for Sovereign AI</p>
+          <div class="trigger">Trigger: <b>$420M owned AI-data-center build</b> (up to 50MW, India) framed around &ldquo;digital sovereignty.&rdquo;</div>
+          <div class="kv">
+            <div class="row"><span class="k">Sector</span><span class="v">Manufacturing, financial services (Europe + India)</span></div>
+            <div class="row"><span class="k">Assets</span><span class="v">Fabric, Network Edge, IBX colocation as burst/DR capacity beside HCLTech's owned DCs</span></div>
+            <div class="row"><span class="k">Motion</span><span class="v">Position early as the interconnection layer between HCLTech's owned compute and its global clients' multi-cloud estates &mdash; complement, not compete</span></div>
+          </div>
+          <p class="why-now"><b>Why now:</b> HCLTech is becoming an infrastructure owner for the first time. The relationship gets defined in the next two quarters &mdash; as a colo/interconnect partner or as a rival on the data-center price list.</p>
+        </div>
+      </div>
+
+      <div class="play-card" style="--col:var(--c-tcs); --wash:var(--c-tcs-wash)">
+        <div class="top"><span class="co-badge"><span class="sw" style="background:var(--c-tcs)"></span>TCS</span><span class="status whitespace">White space</span></div>
+        <div class="body">
+          <p class="jvp-name">AI Mobility Interconnection Hub</p>
+          <div class="trigger">Trigger: <b>Porsche + MHP carve-out</b> and new AI mobility center of excellence; separately, 50,000 staff on Claude via the Anthropic Global Premier deal.</div>
+          <div class="kv">
+            <div class="row"><span class="k">Sector</span><span class="v">Automotive, industrial (ABB), regulated financial services / life sciences</span></div>
+            <div class="row"><span class="k">Assets</span><span class="v">Network Edge for low-latency connected-vehicle and plant-floor data; Fabric for private, auditable model access (Claude, Google Cloud) outside the public internet</span></div>
+            <div class="row"><span class="k">Motion</span><span class="v">Co-sell into TCS's new automotive/industrial CoEs; a private-connectivity narrative for regulated clients wary of public-internet model access</span></div>
+          </div>
+          <p class="why-now"><b>Why now:</b> TCS is asset-light by design and mid-reorg after its leadership reshuffle &mdash; new practice leads are actively re-scoping partner ecosystems this quarter.</p>
+        </div>
+      </div>
+
+      <div class="play-card" style="--col:var(--c-wipro); --wash:var(--c-wipro-wash)">
+        <div class="top"><span class="co-badge"><span class="sw" style="background:var(--c-wipro)"></span>Wipro</span><span class="status existing">Existing partner</span></div>
+        <div class="body">
+          <p class="jvp-name">Boundaryless Cloud Exchange, for Agents</p>
+          <div class="trigger">Trigger: <b>Gemini Enterprise</b> named the orchestration layer for Wipro's agentic stack (LIFT/WINGS/WEGA), announced today; plus the Olam farm-to-fork build-out.</div>
+          <div class="kv">
+            <div class="row"><span class="k">Sector</span><span class="v">Food &amp; agri-business, insurance (existing Phoenix/ReAssure base)</span></div>
+            <div class="row"><span class="k">Assets</span><span class="v">Extend the existing Boundaryless Cloud Exchange and 13-data-center footprint to carry multi-agent, multi-cloud traffic for Gemini Enterprise workloads</span></div>
+            <div class="row"><span class="k">Motion</span><span class="v">Refresh the 7-year Gold Partner relationship into a named &ldquo;agentic AI interconnection&rdquo; reference architecture, co-branded for the Olam-style vertical wins</span></div>
+          </div>
+          <p class="why-now"><b>Why now:</b> The deepest relationship of the four, and it just gained a concrete workload (Gemini agent orchestration) to build a joint architecture around.</p>
+        </div>
+      </div>
+
+      <div class="play-card" style="--col:var(--c-infy); --wash:var(--c-infy-wash)">
+        <div class="top"><span class="co-badge"><span class="sw" style="background:var(--c-infy)"></span>Infosys</span><span class="status existing">Existing partner</span></div>
+        <div class="body">
+          <p class="jvp-name">Topaz Fabric on Equinix Fabric</p>
+          <div class="trigger">Trigger: <b>Mets&auml; Group deal</b> puts Topaz Fabric inside global IT/OT operations; HFS research shows infrastructure gaps as the top blocker to scaling agentic AI.</div>
+          <div class="kv">
+            <div class="row"><span class="k">Sector</span><span class="v">Manufacturing/OT, healthcare, life sciences (regulated data residency needs)</span></div>
+            <div class="row"><span class="k">Assets</span><span class="v">Fabric for low-latency IT/OT data flows near distributed mills/plants; Digital Services for the real-time data availability the HFS report flags as scarce</span></div>
+            <div class="row"><span class="k">Motion</span><span class="v">Reactivate the named Infosys&ndash;Equinix alliance around a concrete offer: &ldquo;the interconnection layer Topaz Fabric needs to hit real-time data availability&rdquo;</span></div>
+          </div>
+          <p class="why-now"><b>Why now:</b> Infosys' own research just diagnosed the exact gap &mdash; infrastructure and real-time data &mdash; that Equinix is positioned to close.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="synth">
+      <h3 class="display">Sequencing, in priority order</h3>
+      <ol>
+        <li><b>Wipro</b> &mdash; lowest lift: an active 7-year relationship just gained a named workload (Gemini Enterprise agents) to build a joint reference architecture around this quarter.</li>
+        <li><b>HCLTech</b> &mdash; highest urgency: engage before its data-center build-out hardens a go-it-alone posture; the window to shape it as complementary rather than competitive is closing.</li>
+        <li><b>Infosys</b> &mdash; clearest opening: its own HFS research names the infrastructure gap Equinix solves, making the pitch close to self-evident.</li>
+        <li><b>TCS</b> &mdash; timed to internal change: a leadership reshuffle and new automotive/industrial CoEs mean partner ecosystems are actively being re-scoped right now.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="sources">
+    <div class="sec-head">
+      <h2>Sources <span class="sec-num mono">05</span></h2>
+    </div>
+    <p class="sec-desc">All facts above are attributed to the following, retrieved August 28, 2026.</p>
+    <div class="src-grid">
+      <div class="src-group" style="--col:var(--c-hcl)">
+        <h4><span class="sw"></span>HCLTech</h4>
+        <ul>
+          <li><a href="https://nearshoreamericas.com/hcltech-wins-1-14-billion-ai-led-it-services-deal/" target="_blank" rel="noopener">HCLTech wins $1.14B AI-led IT services deal &mdash; Nearshore Americas</a></li>
+          <li><a href="https://www.multibagg.ai/market-pulse/articles/hcltech-114bn-europe-mega-deal-cmr4ylyoga0espo0jl1tz9rbm" target="_blank" rel="noopener">HCLTech $1.14bn deal ends 3-year drought &mdash; Multibagg</a></li>
+          <li><a href="https://www.hcltech.com/press-releases/press-releases-business/hcl-technologies-wins-five-year-it-transformation-deal-wacker-chemie-ag" target="_blank" rel="noopener">HCLTech wins five-year deal with Wacker Chemie AG</a></li>
+          <li><a href="https://www.hcltech.com/press-releases/hcltech-launches-full-stack-ai-offering-powered-new-ai-data-center-investment" target="_blank" rel="noopener">HCLTech launches full-stack AI offering, new AI data center investment</a></li>
+          <li><a href="https://www.businesstoday.in/latest/corporate/story/hcltech-features-in-times-worlds-most-sustainable-companies-2026-list-for-second-straight-year-547205-2026-08-04" target="_blank" rel="noopener">HCLTech features in TIME's Most Sustainable Companies 2026</a></li>
+        </ul>
+      </div>
+      <div class="src-group" style="--col:var(--c-tcs)">
+        <h4><span class="sw"></span>TCS</h4>
+        <ul>
+          <li><a href="https://www.business-standard.com/companies/news/tcs-to-acquire-porsche-s-it-division-mhp-for-373-25-million-126082400886_1.html" target="_blank" rel="noopener">TCS powers Europe push with Porsche deal &mdash; Business Standard</a></li>
+          <li><a href="https://www.cnbc.com/2026/08/25/porsche-inks-billion-ai-deal-india-it-tcs.html" target="_blank" rel="noopener">Porsche inks $1.5B AI deal with TCS &mdash; CNBC</a></li>
+          <li><a href="https://www.tcs.com/who-we-are/newsroom/press-release/tcs-anthropic-launch-global-premier-partnership-drive-enterprise-ai-scaling" target="_blank" rel="noopener">TCS and Anthropic launch Global Premier Partnership</a></li>
+          <li><a href="https://finance.biggo.com/news/8774c4d7-763b-4cc7-9d9e-685db717c69a" target="_blank" rel="noopener">TCS lands ABB deal amid leadership overhaul &mdash; BigGo Finance</a></li>
+          <li><a href="https://www.tcs.com/who-we-are/newsroom/news-alert/tcs-deepens-partnership-google-cloud-power-ai-native-autonomous-enterprises" target="_blank" rel="noopener">TCS deepens Google Cloud partnership</a></li>
+        </ul>
+      </div>
+      <div class="src-group" style="--col:var(--c-wipro)">
+        <h4><span class="sw"></span>Wipro</h4>
+        <ul>
+          <li><a href="https://www.business-standard.com/markets/capital-market-news/wipro-rises-after-expanding-ai-partnership-with-google-cloud-126082800541_1.html" target="_blank" rel="noopener">Wipro rises after expanding AI partnership with Google Cloud</a></li>
+          <li><a href="https://www.deccanherald.com/business/companies/wipro-expands-google-cloud-partnership-to-scale-gemini-enterprise-agentic-ai-4126226" target="_blank" rel="noopener">Wipro expands Google Cloud partnership &mdash; Deccan Herald</a></li>
+          <li><a href="https://www.wipro.com/newsroom/press-releases/2026/wipro-wins-one-of-its-largest-strategic-transformation-engagements-from-food-and-agri-business-leader-olam-group/" target="_blank" rel="noopener">Wipro wins Olam Group transformation engagement</a></li>
+          <li><a href="https://www.wipro.com/newsroom/press-releases/2026/wipro-announces-results-for-the-quarter-and-year-ended-march-31-2026/" target="_blank" rel="noopener">Wipro FY26 results</a></li>
+          <li><a href="https://www.wipro.com/partner-ecosystem/equinix/" target="_blank" rel="noopener">Wipro &ndash; Equinix partner ecosystem page</a></li>
+        </ul>
+      </div>
+      <div class="src-group" style="--col:var(--c-infy)">
+        <h4><span class="sw"></span>Infosys</h4>
+        <ul>
+          <li><a href="https://www.infosys.com/newsroom/press-releases/2026/optimizing-global-operational-capabilities.html" target="_blank" rel="noopener">Infosys to accelerate IT system transformation for Crocs</a></li>
+          <li><a href="https://www.stocktitan.net/news/INFY/infosys-and-metsa-group-expand-strategic-collaboration-to-drive-ai-eu39ndkoophg.html" target="_blank" rel="noopener">Infosys and Mets&auml; Group expand strategic collaboration</a></li>
+          <li><a href="https://www.infosys.com/newsroom/features/2026/enterprises-scaled-agentic-ai.html" target="_blank" rel="noopener">Infosys&ndash;HFS: only 14% of enterprises have scaled agentic AI</a></li>
+          <li><a href="https://www.infosys.com/newsroom/press-releases/2026/accelerate-enterprise-adoption-generative-ai.html" target="_blank" rel="noopener">Infosys and AWS collaborate on generative AI</a></li>
+          <li><a href="https://www.infosys.com/about/alliances/equinix.html" target="_blank" rel="noopener">Infosys &ndash; Equinix alliance page</a></li>
+        </ul>
+      </div>
+      <div class="src-group" style="--col:var(--accent)">
+        <h4><span class="sw"></span>Cross-portfolio</h4>
+        <ul>
+          <li><a href="https://news.microsoft.com/source/asia/2026/06/03/infosys-tcs-and-wipro-scale-microsoft-365-copilot-to-over-300000-employees/" target="_blank" rel="noopener">Infosys, TCS and Wipro scale Microsoft 365 Copilot &mdash; Microsoft</a></li>
+          <li><a href="https://www.whalesbook.com/news/English/technology/TCS-HCLTech-Address-Cyber-Alerts-Deny-System-Breaches/6a8be9cc84d2dd5c12e28f4c" target="_blank" rel="noopener">TCS, HCLTech address cyber alerts, deny system breaches</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Compiled by an automated research run for the Equinix project &middot; not an official publication of Equinix or the companies named &middot; verify figures against primary sources before external use.
+</footer>
+
+<script>
+  (function(){
+    // scroll-spy
+    var links = Array.prototype.slice.call(document.querySelectorAll('#topnav .navlink'));
+    var targets = links.map(function(l){ return document.querySelector(l.getAttribute('href')); }).filter(Boolean);
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            var id = '#' + e.target.id;
+            links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href') === id); });
+          }
+        });
+      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+      targets.forEach(function(t){ io.observe(t); });
+    }
+
+    // filter chips (shared pattern for deals + tech)
+    function wireFilters(groupId, itemsSelector, dataAttr){
+      var group = document.getElementById(groupId);
+      if(!group) return;
+      var chips = Array.prototype.slice.call(group.querySelectorAll('.chip'));
+      var items = Array.prototype.slice.call(document.querySelectorAll(itemsSelector));
+      chips.forEach(function(chip){
+        chip.addEventListener('click', function(){
+          chips.forEach(function(c){ c.setAttribute('aria-pressed','false'); });
+          chip.setAttribute('aria-pressed','true');
+          var f = chip.getAttribute('data-filter');
+          items.forEach(function(item){
+            var co = item.getAttribute(dataAttr) || '';
+            var show = (f === 'all') || co.split(' ').indexOf(f) !== -1;
+            item.classList.toggle('hidden', !show);
+          });
+        });
+      });
+    }
+    wireFilters('dealFilters', '#dealTable tbody tr', 'data-co');
+    wireFilters('techFilters', '#techGrid .tcard', 'data-co');
+
+    // animate bars once visible
+    var chart = document.getElementById('dealChart');
+    if(chart){
+      var fills = chart.querySelectorAll('.bar-fill');
+      var run = function(){ fills.forEach(function(f){ f.style.width = f.getAttribute('data-target') + '%'; }); };
+      if('IntersectionObserver' in window){
+        var once = new IntersectionObserver(function(entries, obs){
+          entries.forEach(function(e){ if(e.isIntersecting){ run(); obs.disconnect(); } });
+        }, { threshold: 0.3 });
+        once.observe(chart);
+      } else { run(); }
+    }
+  })();
+</script>
